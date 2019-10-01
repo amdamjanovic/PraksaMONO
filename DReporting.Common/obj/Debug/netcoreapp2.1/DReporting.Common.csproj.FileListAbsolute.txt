@@ -1,0 +1,9 @@
+C:\Users\damjanovic\Desktop\Praksa\DReporting\DReporting.Common\bin\Debug\netcoreapp2.1\DReporting.Common.deps.json
+C:\Users\damjanovic\Desktop\Praksa\DReporting\DReporting.Common\bin\Debug\netcoreapp2.1\DReporting.Common.dll
+C:\Users\damjanovic\Desktop\Praksa\DReporting\DReporting.Common\bin\Debug\netcoreapp2.1\DReporting.Common.pdb
+C:\Users\damjanovic\Desktop\Praksa\DReporting\DReporting.Common\obj\Debug\netcoreapp2.1\DReporting.Common.csprojAssemblyReference.cache
+C:\Users\damjanovic\Desktop\Praksa\DReporting\DReporting.Common\obj\Debug\netcoreapp2.1\DReporting.Common.csproj.CoreCompileInputs.cache
+C:\Users\damjanovic\Desktop\Praksa\DReporting\DReporting.Common\obj\Debug\netcoreapp2.1\DReporting.Common.AssemblyInfoInputs.cache
+C:\Users\damjanovic\Desktop\Praksa\DReporting\DReporting.Common\obj\Debug\netcoreapp2.1\DReporting.Common.AssemblyInfo.cs
+C:\Users\damjanovic\Desktop\Praksa\DReporting\DReporting.Common\obj\Debug\netcoreapp2.1\DReporting.Common.dll
+C:\Users\damjanovic\Desktop\Praksa\DReporting\DReporting.Common\obj\Debug\netcoreapp2.1\DReporting.Common.pdb
