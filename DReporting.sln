@@ -3,21 +3,26 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DReporting.WebAPI", "WebAPI\DReporting.WebAPI.csproj", "{4E005DE7-76AB-47B4-A13F-7F054796A808}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DReporting.WebAPI", "WebAPI\DReporting.WebAPI.csproj", "{4E005DE7-76AB-47B4-A13F-7F054796A808}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DReporting.Common", "DReporting.Common\DReporting.Common.csproj", "{2FAC717C-E005-4014-BDC9-2B478EBF1675}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DReporting.Common", "DReporting.Common\DReporting.Common.csproj", "{2FAC717C-E005-4014-BDC9-2B478EBF1675}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DReporting.Model.Common", "DReporting.Model.Common\DReporting.Model.Common.csproj", "{5796C076-1DA6-420C-8BF5-777C5F84D5F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DReporting.Model.Common", "DReporting.Model.Common\DReporting.Model.Common.csproj", "{5796C076-1DA6-420C-8BF5-777C5F84D5F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DReporting.Model", "DReporting.Model\DReporting.Model.csproj", "{9BFA9ACE-38DC-4D2E-9DC1-F9A209DA5E6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DReporting.Model", "DReporting.Model\DReporting.Model.csproj", "{9BFA9ACE-38DC-4D2E-9DC1-F9A209DA5E6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DReporting.Service", "DReporting.Service\DReporting.Service.csproj", "{069B8968-55FA-4AD5-B907-C60A7E988FD4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DReporting.Service", "DReporting.Service\DReporting.Service.csproj", "{069B8968-55FA-4AD5-B907-C60A7E988FD4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DReporting.Service.Common", "DReporting.Service.Common\DReporting.Service.Common.csproj", "{8FE1A31C-D1D9-46A0-93D3-FFCD2199262B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DReporting.Service.Common", "DReporting.Service.Common\DReporting.Service.Common.csproj", "{8FE1A31C-D1D9-46A0-93D3-FFCD2199262B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DReporting.Repository", "DReporting.Repository\DReporting.Repository.csproj", "{075EC338-FA4E-425E-9C6A-11A71A7BAE86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DReporting.Repository", "DReporting.Repository\DReporting.Repository.csproj", "{075EC338-FA4E-425E-9C6A-11A71A7BAE86}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DReporting.Repository.Common", "DReporting.Repository.Common\DReporting.Repository.Common.csproj", "{AFFE925C-7777-4F5A-B8DE-CDFD0F367C1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DReporting.Repository.Common", "DReporting.Repository.Common\DReporting.Repository.Common.csproj", "{AFFE925C-7777-4F5A-B8DE-CDFD0F367C1A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{C7F578FA-22DC-4CBC-B919-2C6D94938907}"
+	ProjectSection(SolutionItems) = preProject
+		ClientConfiguration.cs = ClientConfiguration.cs
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

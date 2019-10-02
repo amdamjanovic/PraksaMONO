@@ -12,3 +12,17 @@ C:\Users\damjanovic\Desktop\Praksa\DReporting\WebAPI\obj\Debug\netcoreapp2.1\DRe
 C:\Users\damjanovic\Desktop\Praksa\DReporting\WebAPI\obj\Debug\netcoreapp2.1\DReporting.WebAPI.RazorTargetAssemblyInfo.cache
 C:\Users\damjanovic\Desktop\Praksa\DReporting\WebAPI\obj\Debug\netcoreapp2.1\DReporting.WebAPI.dll
 C:\Users\damjanovic\Desktop\Praksa\DReporting\WebAPI\obj\Debug\netcoreapp2.1\DReporting.WebAPI.pdb
+C:\FaksGit\Praksa\WebAPI\bin\Debug\netcoreapp2.1\DReporting.WebAPI.deps.json
+C:\FaksGit\Praksa\WebAPI\bin\Debug\netcoreapp2.1\DReporting.WebAPI.runtimeconfig.json
+C:\FaksGit\Praksa\WebAPI\bin\Debug\netcoreapp2.1\DReporting.WebAPI.runtimeconfig.dev.json
+C:\FaksGit\Praksa\WebAPI\bin\Debug\netcoreapp2.1\DReporting.WebAPI.dll
+C:\FaksGit\Praksa\WebAPI\bin\Debug\netcoreapp2.1\DReporting.WebAPI.pdb
+C:\FaksGit\Praksa\WebAPI\obj\Debug\netcoreapp2.1\DReporting.WebAPI.csprojAssemblyReference.cache
+C:\FaksGit\Praksa\WebAPI\obj\Debug\netcoreapp2.1\DReporting.WebAPI.csproj.CoreCompileInputs.cache
+C:\FaksGit\Praksa\WebAPI\obj\Debug\netcoreapp2.1\DReporting.WebAPI.RazorAssemblyInfo.cache
+C:\FaksGit\Praksa\WebAPI\obj\Debug\netcoreapp2.1\DReporting.WebAPI.RazorAssemblyInfo.cs
+C:\FaksGit\Praksa\WebAPI\obj\Debug\netcoreapp2.1\DReporting.WebAPI.AssemblyInfoInputs.cache
+C:\FaksGit\Praksa\WebAPI\obj\Debug\netcoreapp2.1\DReporting.WebAPI.AssemblyInfo.cs
+C:\FaksGit\Praksa\WebAPI\obj\Debug\netcoreapp2.1\DReporting.WebAPI.RazorTargetAssemblyInfo.cache
+C:\FaksGit\Praksa\WebAPI\obj\Debug\netcoreapp2.1\DReporting.WebAPI.dll
+C:\FaksGit\Praksa\WebAPI\obj\Debug\netcoreapp2.1\DReporting.WebAPI.pdb

@@ -7,3 +7,12 @@ C:\Users\damjanovic\Desktop\Praksa\DReporting\DReporting.Model\obj\Debug\netcore
 C:\Users\damjanovic\Desktop\Praksa\DReporting\DReporting.Model\obj\Debug\netcoreapp2.1\DReporting.Model.AssemblyInfo.cs
 C:\Users\damjanovic\Desktop\Praksa\DReporting\DReporting.Model\obj\Debug\netcoreapp2.1\DReporting.Model.dll
 C:\Users\damjanovic\Desktop\Praksa\DReporting\DReporting.Model\obj\Debug\netcoreapp2.1\DReporting.Model.pdb
+C:\FaksGit\Praksa\DReporting.Model\bin\Debug\netcoreapp2.1\DReporting.Model.deps.json
+C:\FaksGit\Praksa\DReporting.Model\bin\Debug\netcoreapp2.1\DReporting.Model.dll
+C:\FaksGit\Praksa\DReporting.Model\bin\Debug\netcoreapp2.1\DReporting.Model.pdb
+C:\FaksGit\Praksa\DReporting.Model\obj\Debug\netcoreapp2.1\DReporting.Model.csprojAssemblyReference.cache
+C:\FaksGit\Praksa\DReporting.Model\obj\Debug\netcoreapp2.1\DReporting.Model.csproj.CoreCompileInputs.cache
+C:\FaksGit\Praksa\DReporting.Model\obj\Debug\netcoreapp2.1\DReporting.Model.AssemblyInfoInputs.cache
+C:\FaksGit\Praksa\DReporting.Model\obj\Debug\netcoreapp2.1\DReporting.Model.AssemblyInfo.cs
+C:\FaksGit\Praksa\DReporting.Model\obj\Debug\netcoreapp2.1\DReporting.Model.dll
+C:\FaksGit\Praksa\DReporting.Model\obj\Debug\netcoreapp2.1\DReporting.Model.pdb
