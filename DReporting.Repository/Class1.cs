@@ -2,7 +2,7 @@
 
 namespace DReporting.Repository
 {
-    public class AppClientConfiguration:
+    public class Class1
     {
     }
 }

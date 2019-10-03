@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Baasic.Client.Configuration;
+using WebApi;
 
 namespace WebAPI.Controllers
 {
@@ -10,11 +12,19 @@ namespace WebAPI.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        //Inject the Configuration class via constructor
+        private Configuration _configuration { get; set; }
+
+        public ValuesController(Configuration configuration)
+        {
+            _configuration = configuration;
+        }
+
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult <IEnumerable<string>> Get()
         {
-            return new string[] { "value1", "value2" };
+           return new string[] {"ConnectionString: ", _configuration.ConnectionString};
         }
 
         // GET api/values/5

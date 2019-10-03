@@ -10,24 +10,50 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Autofac.Extensions.DependencyInjection;
+using Autofac;
+using WebApi;
 
 namespace WebAPI
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+              .SetBasePath(env.ContentRootPath)
+              .AddJsonFile("development.json", optional: true, reloadOnChange: true)
+              //.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
+              .AddEnvironmentVariables();
+            this.Configuration = builder.Build();
+
+           //Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        public IConfigurationRoot Configuration { get; set; }
+        public ILifetimeScope AutofacContainer { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-        }
+            //Singleton objects are the same for every object and every request
+            services.AddSingleton(Configuration.GetSection("Configuration").Get<Configuration>());
 
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            // create a container-builder and register dependencies
+            var containerBuilder = new ContainerBuilder();
+            containerBuilder.RegisterModule(new AutofacModule());
+
+            // populate the Autofac container with services (service-descriptors added to `IServiceCollection`)
+            containerBuilder.Populate(services);
+
+            AutofacContainer = containerBuilder.Build();
+
+            // this will be used as the service-provider for the application!
+            return new AutofacServiceProvider(AutofacContainer);
+        }
+        
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
@@ -43,5 +69,8 @@ namespace WebAPI
             app.UseHttpsRedirection();
             app.UseMvc();
         }
+
+        
     }
+    
 }
