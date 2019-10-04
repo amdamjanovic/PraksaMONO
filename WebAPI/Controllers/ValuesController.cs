@@ -22,9 +22,9 @@ namespace WebAPI.Controllers
 
         // GET api/values
         [HttpGet]
-        public ActionResult <IEnumerable<string>> Get()
+        public ActionResult<IEnumerable<string>> Get()
         {
-           return new string[] {"ConnectionString: ", _configuration.ConnectionString};
+            return new string[] { "ApiKey:", _configuration.ApiKey };
         }
 
         // GET api/values/5

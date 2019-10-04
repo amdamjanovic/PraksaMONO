@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Autofac.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace WebAPI
 {
@@ -27,9 +28,17 @@ namespace WebAPI
 
             host.Run();
         }
-
+        /*
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>();
+    }*/
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
+        {
+            var assemblyName = typeof(Startup).GetTypeInfo().Assembly.FullName;
+
+            return WebHost.CreateDefaultBuilder(args).UseStartup(assemblyName);
+        }
+
     }
 }

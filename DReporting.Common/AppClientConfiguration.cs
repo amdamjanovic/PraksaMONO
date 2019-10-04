@@ -8,10 +8,10 @@ using System;
 /// </summary>
 public class AppClientConfiguration : ClientConfiguration
 {
-    
+
     #region Fields
 
-    private const string apiKey = "dreporting";
+    static public string apiKey { get; set; }
 
     #endregion Fields
 
