@@ -9,4 +9,16 @@
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="5.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DReporting.Repository.Common\DReporting.Repository.Common.csproj" />
+    <ProjectReference Include="..\DReporting.Repository\DReporting.Repository.csproj" />
+    <ProjectReference Include="..\DReporting.Service.Common\DReporting.Service.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNetCore.Mvc.Abstractions">
+      <HintPath>..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore.mvc.abstractions\2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.Abstractions.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

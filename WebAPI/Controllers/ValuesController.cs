@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Baasic.Client.Configuration;
-using WebApi;
+using DReporting.Model;
 
 namespace WebAPI.Controllers
 {
@@ -13,18 +13,18 @@ namespace WebAPI.Controllers
     public class ValuesController : ControllerBase
     {
         //Inject the Configuration class via constructor
-        private Configuration _configuration { get; set; }
+        private ReportModel _configModel { get; set; }
 
-        public ValuesController(Configuration configuration)
+        public ValuesController(ReportModel configuration)
         {
-            _configuration = configuration;
+            _configModel = configuration;
         }
 
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "ApiKey:", _configuration.ApiKey };
+            return new string[] {"Date:", _configModel.Date};
         }
 
         // GET api/values/5

@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Autofac.Extensions.DependencyInjection;
 using Autofac;
-using WebApi;
+using DReporting.Model;
 
 namespace WebAPI
 {
@@ -21,23 +21,38 @@ namespace WebAPI
     // Selected if the environment doesn't match a Startup{EnvironmentName} class
     public class Startup
     {
-        public Startup(IConfiguration configuration, IHostingEnvironment env)
+        public Startup(IConfiguration _config, IHostingEnvironment env)
         {
+            ReportModel reportModel = new ReportModel();
+
             var builder = new ConfigurationBuilder()
               .SetBasePath(env.ContentRootPath)
-              .AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true)
+              .AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true)
               .AddEnvironmentVariables();
-            this.Configuration = builder.Build();
-        }
 
-        public IConfigurationRoot Configuration { get; set; }
+            Configuration = builder.Build();
+            ConfigurationBinder.Bind(Configuration, reportModel);
+            /*
+            var report = new ReportModel();
+            _config.GetSection("ConnectionDev").Bind(report);
+            ReportModel = report;*/
+        }
+        
+        public IConfiguration Configuration { get; set; }
         public ILifetimeScope AutofacContainer { get; set; }
+        public ReportModel ReportModel { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            var config = new ReportModel();
+            Configuration.Bind("ConnectionDev", config);
+            services.AddSingleton(config);
+
+            //services.Configure<ReportModel>(options => Configuration.GetSection("ConnectionDev").Bind(options));
+            
             //Singleton objects are the same for every object and every request
-            services.AddSingleton(Configuration.GetSection("ConnectionDev").Get<Configuration>());
+            //services.AddSingleton(Configuration.GetSection("ConnectionDev").Get<ReportModel>());
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -92,7 +107,7 @@ namespace WebAPI
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             //Singleton objects are the same for every object and every request
-            services.AddSingleton(Configuration.GetSection("ConnectionProd").Get<Configuration>());
+            services.AddSingleton(Configuration.GetSection("ConnectionProd").Get<ReportModel>());
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -141,7 +156,7 @@ namespace WebAPI
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             //Singleton objects are the same for every object and every request
-            services.AddSingleton(Configuration.GetSection("ConnectionStag").Get<Configuration>());
+            services.AddSingleton(Configuration.GetSection("ConnectionStag").Get<ReportModel>());
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 

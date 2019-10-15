@@ -8,6 +8,13 @@
     <PackageReference Include="Autofac" Version="4.9.4" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="5.0.0" />
     <PackageReference Include="Baasic.Client" Version="1.2.0" />
+    <PackageReference Include="EntityFramework" Version="6.3.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DReporting.Model\DReporting.Model.csproj" />
+    <ProjectReference Include="..\DReporting.Repository.Common\DReporting.Repository.Common.csproj" />
   </ItemGroup>
 
 </Project>

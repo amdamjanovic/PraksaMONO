@@ -27,7 +27,8 @@ public class AppClientConfiguration : ClientConfiguration
         
     }
 
-    public AppClientConfiguration(string applicationIdentifier, ITokenHandler tokenHandler) : base(applicationIdentifier, tokenHandler)
+    public AppClientConfiguration(string applicationIdentifier, ITokenHandler tokenHandler) 
+        : base(applicationIdentifier, tokenHandler)
     {
     }
 
