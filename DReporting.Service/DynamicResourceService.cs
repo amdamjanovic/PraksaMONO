@@ -22,22 +22,25 @@ namespace DReporting.Service
         private DynamicResourceRepository dynamicResourceRepository;
         private IValidationDictionary validationDictionary;
 
+        #region Constructors
         public DynamicResourceService(IValidationDictionary _validationDictionary, IModelRepository _modelRepostory, DynamicResourceRepository _dynamicResourceRepository)
         {
             modelRepostory = _modelRepostory;
             validationDictionary = _validationDictionary;
             dynamicResourceRepository = _dynamicResourceRepository;
         }
-        
+
         public DynamicResourceService(IValidationDictionary _validationDictionary, DynamicResourceRepository _dynamicResourceRepository)
         {
             validationDictionary = _validationDictionary;
             dynamicResourceRepository = _dynamicResourceRepository;
         }
-        
+        #endregion
+
+        #region Validation
         protected bool ValidateInput(ReportModel inputToValidate)
         {
-            if (inputToValidate.Date.Trim().Length == 0)
+            if (inputToValidate.Date == null)
             {
                 validationDictionary.AddError("Date", "Date is required");
             }
@@ -63,7 +66,9 @@ namespace DReporting.Service
             }
             return validationDictionary.IsValid;
         }
+        #endregion
 
+        #region Get/Post methods
         public IEnumerable<ReportModel> ListModel()
         {
             return modelRepostory.ListModel();
@@ -82,9 +87,12 @@ namespace DReporting.Service
             catch
             {
                 return false;
-            }return true;
+            }
+            return true;
         }
+        #endregion
 
+        #region Methods
         public async Task DeleteDataAsync(string id)
         {
             await dynamicResourceRepository.DeleteDataAsync(id);
@@ -104,11 +112,12 @@ namespace DReporting.Service
         {
             await dynamicResourceRepository.UpdateDataAsync(schemaName, resource);
         }
-    }
 
-    public interface IModelService
-    {
-        bool CreateModel(ReportModel modelToCreate);
-        IEnumerable<ReportModel> ListModel();
+        public async Task GetDataById(string id)
+        {
+            await dynamicResourceRepository.GetDataById(id);
+        }
     }
+    #endregion
+    
 }

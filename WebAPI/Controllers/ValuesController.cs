@@ -24,7 +24,7 @@ namespace WebAPI.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] {"Date:", _configModel.Date};
+            return new string[] {"Done:", _configModel.Done};
         }
 
         // GET api/values/5

@@ -17,7 +17,8 @@ namespace Baasic.Client.Modules.DynamicResource
         private readonly ReportModel reportModel;
         private readonly IBaseModel dynamicResourceClient;
         private readonly MyDbContext myDbContext;
-        
+
+        #region Constructors
         public DynamicResourceRepository(IBaseModel _dynamicResourceClient, MyDbContext _myDbContext)
         {
             dynamicResourceClient = _dynamicResourceClient;
@@ -32,7 +33,9 @@ namespace Baasic.Client.Modules.DynamicResource
         {
             this.reportModel = reportModel;
         }
+        #endregion
 
+        #region Methods
         //GET DATA
         public async Task GetDataAsync(string schemaName, 
                                        string id, 
@@ -60,15 +63,11 @@ namespace Baasic.Client.Modules.DynamicResource
             await dynamicResourceClient.InsertAsync(schemaName, resource);
         }
 
-        public Task GetDataById(string id)
+        //GET DATA BY ID
+        public async Task GetDataById(string id)
         {
-            throw new System.NotImplementedException();
+            await dynamicResourceClient.GetByIdAsync(id);
         }
-
-        public interface IModelRepository
-        {
-            bool CreateModel(ReportModel modelToCreate);
-            IEnumerable<ReportModel> ListModel();
-        }
+        #endregion
     }
 }

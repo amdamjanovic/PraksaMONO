@@ -13,6 +13,8 @@ namespace DReporting.Service.Common
         Task UpdateDataAsync(string schemaName, ReportModel resource);
         Task InsertDataAsync(string schemaName, ReportModel resource);
 
+        Task GetDataById(string id);
+
         
     }
 }

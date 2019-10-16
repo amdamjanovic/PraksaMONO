@@ -5,9 +5,16 @@ using System.Threading.Tasks;
 using Baasic.Client.Modules.DynamicResource;
 using DReporting.Model;
 using DReporting.Service;
+using DReporting.Service.Common;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
 using static Baasic.Client.Modules.DynamicResource.DynamicResourceRepository;
+
+/* 
+ The controller use service layer. 
+ The service layer talks to the repository layer. 
+ Each layer has a separate responsibility. 
+*/
 
 namespace DReporting.WebAPI.Controllers
 {

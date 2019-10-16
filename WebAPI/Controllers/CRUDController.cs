@@ -5,6 +5,7 @@ using DReporting.Model.Common;
 using DReporting.Repository.Common;
 using DReporting.Service;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -69,7 +70,30 @@ namespace DReporting.WebAPI.Controllers
         #endregion
         public ActionResult Index()
         {
-            return View(context.ReportModel.ToList());
+            DateTime today = DateTime.Today;
+
+            List<ReportModel> listModel = new List<ReportModel>();
+            listModel.Add(new ReportModel
+            {
+                Date = today,
+                Done = "Done upis",
+                InProgress = "Trenutno je to",
+                Scheduled = "Za sutra to",
+                Problems = "Problemi, problemi",
+                Description = "Neki poduzi opis"
+            });
+
+            listModel.Add(new ReportModel
+            {
+                Date = today,
+                Done = "Done drugi upis",
+                InProgress = "Trenutno je to drugi upis",
+                Scheduled = "Za sutra to drugi upis",
+                Problems = "Problemi, problemi drugi upis",
+                Description = "Neki poduzi opis za drugi upis"
+            });
+
+            return View(listModel);
         }
 
         //POST CREATE
@@ -117,10 +141,11 @@ namespace DReporting.WebAPI.Controllers
         }
 
         //GET EDIT
-        public ActionResult Edit()
+        public ActionResult Edit(string id)
         {
-            return View();
-        }
+            ReportModel reportModel = (ReportModel)dynamicResourceRepository.GetDataById(id);
+            return View(reportModel);
+        } 
 
         //GET DELETE
         public ActionResult Delete(bool? saveChangesError = false, int id = 0)
@@ -137,6 +162,7 @@ namespace DReporting.WebAPI.Controllers
         {
             try
             {
+                ReportModel reportModel = (ReportModel)dynamicResourceRepository.GetDataById(id);
                 await dynamicResourceRepository.DeleteDataAsync(id);
             }
             catch
