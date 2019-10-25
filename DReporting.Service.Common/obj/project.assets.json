@@ -11,7 +11,7 @@
           "lib/netstandard2.0/Autofac.dll": {}
         }
       },
-      "Autofac.Extensions.DependencyInjection/5.0.0": {
+      "Autofac.Extensions.DependencyInjection/5.0.1": {
         "type": "package",
         "dependencies": {
           "Autofac": "4.9.1",
@@ -38,6 +38,22 @@
         },
         "runtime": {
           "lib/netcoreapp2.2/Baasic.Client.dll": {}
+        }
+      },
+      "Baasic.Client.AutoFac/1.2.0": {
+        "type": "package",
+        "dependencies": {
+          "Autofac": "4.8.1",
+          "Baasic.Client": "1.2.0",
+          "Baasic.Client.Common": "1.2.0",
+          "Baasic.Client.Model": "1.2.0",
+          "Microsoft.AspNetCore.Http": "2.2.0"
+        },
+        "compile": {
+          "lib/netcoreapp2.2/Baasic.Client.AutoFac.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp2.2/Baasic.Client.AutoFac.dll": {}
         }
       },
       "Baasic.Client.Common/1.2.0": {
@@ -130,6 +146,18 @@
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.AspNetCore.WebUtilities.dll": {}
+        }
+      },
+      "Microsoft.Extensions.Configuration.Abstractions/2.2.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Primitives": "2.2.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.Extensions.Configuration.Abstractions.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Extensions.Configuration.Abstractions.dll": {}
         }
       },
       "Microsoft.Extensions.DependencyInjection.Abstractions/2.2.0": {
@@ -468,9 +496,11 @@
         "framework": ".NETCoreApp,Version=v2.2",
         "dependencies": {
           "Autofac": "4.9.4",
-          "Autofac.Extensions.DependencyInjection": "5.0.0",
+          "Autofac.Extensions.DependencyInjection": "5.0.1",
           "Baasic.Client": "1.2.0",
-          "DReporting.Model.Common": "1.0.0"
+          "Baasic.Client.AutoFac": "1.2.0",
+          "DReporting.Model.Common": "1.0.0",
+          "Microsoft.Extensions.Configuration.Abstractions": "2.2.0"
         },
         "compile": {
           "bin/placeholder/DReporting.Model.dll": {}
@@ -484,8 +514,10 @@
         "framework": ".NETCoreApp,Version=v2.2",
         "dependencies": {
           "Autofac": "4.9.4",
-          "Autofac.Extensions.DependencyInjection": "5.0.0",
-          "Baasic.Client": "1.2.0"
+          "Autofac.Extensions.DependencyInjection": "5.0.1",
+          "Baasic.Client": "1.2.0",
+          "Baasic.Client.AutoFac": "1.2.0",
+          "Microsoft.Extensions.Configuration.Abstractions": "2.2.0"
         },
         "compile": {
           "bin/placeholder/DReporting.Model.Common.dll": {}
@@ -517,14 +549,14 @@
         "lib/netstandard2.0/Autofac.xml"
       ]
     },
-    "Autofac.Extensions.DependencyInjection/5.0.0": {
-      "sha512": "MQYbslp/cguL11jrKWIaR7LVCCLB9od/ysEjvamzB5QVbjbTGeNSXLq46RONiCE3RlAsphs7N8qm/v8uDPEAMQ==",
+    "Autofac.Extensions.DependencyInjection/5.0.1": {
+      "sha512": "92/AmuykrdvaLlE8Y4sc4SlX2RrCeClUqddjNi7cAYsOsVD/jq5JXDP1ZhHSBan4P/o7AKjpxjD/MrPTO0DHRw==",
       "type": "package",
-      "path": "autofac.extensions.dependencyinjection/5.0.0",
+      "path": "autofac.extensions.dependencyinjection/5.0.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "autofac.extensions.dependencyinjection.5.0.0.nupkg.sha512",
+        "autofac.extensions.dependencyinjection.5.0.1.nupkg.sha512",
         "autofac.extensions.dependencyinjection.nuspec",
         "lib/netstandard2.0/Autofac.Extensions.DependencyInjection.dll",
         "lib/netstandard2.0/Autofac.Extensions.DependencyInjection.pdb",
@@ -548,6 +580,25 @@
         "lib/netcoreapp2.0/Baasic.Client.dll",
         "lib/netcoreapp2.1/Baasic.Client.dll",
         "lib/netcoreapp2.2/Baasic.Client.dll"
+      ]
+    },
+    "Baasic.Client.AutoFac/1.2.0": {
+      "sha512": "XbcACvMEGV//obOEJz4ML0TS6nfF/QEkVW38dR5Br40jxJZ+RdlGQjT3Lh1vhgQ0NfddIHyK9/UnyDZKuMIRww==",
+      "type": "package",
+      "path": "baasic.client.autofac/1.2.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "baasic.client.autofac.1.2.0.nupkg.sha512",
+        "baasic.client.autofac.nuspec",
+        "lib/net461/Baasic.Client.AutoFac.dll",
+        "lib/net462/Baasic.Client.AutoFac.dll",
+        "lib/net47/Baasic.Client.AutoFac.dll",
+        "lib/net471/Baasic.Client.AutoFac.dll",
+        "lib/net472/Baasic.Client.AutoFac.dll",
+        "lib/netcoreapp2.0/Baasic.Client.AutoFac.dll",
+        "lib/netcoreapp2.1/Baasic.Client.AutoFac.dll",
+        "lib/netcoreapp2.2/Baasic.Client.AutoFac.dll"
       ]
     },
     "Baasic.Client.Common/1.2.0": {
@@ -655,6 +706,19 @@
         "lib/netstandard2.0/Microsoft.AspNetCore.WebUtilities.xml",
         "microsoft.aspnetcore.webutilities.2.2.0.nupkg.sha512",
         "microsoft.aspnetcore.webutilities.nuspec"
+      ]
+    },
+    "Microsoft.Extensions.Configuration.Abstractions/2.2.0": {
+      "sha512": "65MrmXCziWaQFrI0UHkQbesrX5wTwf9XPjY5yFm/VkgJKFJ5gqvXRoXjIZcf2wLi5ZlwGz/oMYfyURVCWbM5iw==",
+      "type": "package",
+      "path": "microsoft.extensions.configuration.abstractions/2.2.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/Microsoft.Extensions.Configuration.Abstractions.dll",
+        "lib/netstandard2.0/Microsoft.Extensions.Configuration.Abstractions.xml",
+        "microsoft.extensions.configuration.abstractions.2.2.0.nupkg.sha512",
+        "microsoft.extensions.configuration.abstractions.nuspec"
       ]
     },
     "Microsoft.Extensions.DependencyInjection.Abstractions/2.2.0": {
@@ -1445,8 +1509,10 @@
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.2": [
       "Autofac >= 4.9.4",
-      "Autofac.Extensions.DependencyInjection >= 5.0.0",
+      "Autofac.Extensions.DependencyInjection >= 5.0.1",
+      "Baasic.Client.AutoFac >= 1.2.0",
       "DReporting.Model >= 1.0.0",
+      "Microsoft.Extensions.Configuration.Abstractions >= 2.2.0",
       "Microsoft.NETCore.App >= 2.2.0"
     ]
   },
@@ -1501,7 +1567,15 @@
           },
           "Autofac.Extensions.DependencyInjection": {
             "target": "Package",
-            "version": "[5.0.0, )"
+            "version": "[5.0.1, )"
+          },
+          "Baasic.Client.AutoFac": {
+            "target": "Package",
+            "version": "[1.2.0, )"
+          },
+          "Microsoft.Extensions.Configuration.Abstractions": {
+            "target": "Package",
+            "version": "[2.2.0, )"
           },
           "Microsoft.NETCore.App": {
             "suppressParent": "All",

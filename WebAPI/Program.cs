@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.IO;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Autofac.Extensions.DependencyInjection;
 using System.Reflection;
+using DReporting.Service.Common;
+using DReporting.Service;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace WebAPI
 {
@@ -16,7 +13,6 @@ namespace WebAPI
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
 
             var host = new WebHostBuilder()
                 .UseKestrel()
@@ -28,17 +24,8 @@ namespace WebAPI
 
             host.Run();
         }
-        /*
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
-    }*/
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
-        {
-            var assemblyName = typeof(Startup).GetTypeInfo().Assembly.FullName;
 
-            return WebHost.CreateDefaultBuilder(args).UseStartup(assemblyName);
-        }
+        
 
     }
 }

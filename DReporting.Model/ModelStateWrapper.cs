@@ -19,8 +19,7 @@ namespace DReporting.Model
         {
             modelState = _modelState;
         }
-
-
+        
         public bool IsValid
         {
             get { return modelState.IsValid; }

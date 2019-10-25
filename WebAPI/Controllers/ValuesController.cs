@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Baasic.Client.Configuration;
 using DReporting.Model;
+using DReporting.Service.Common;
+using Baasic.Client.Core;
+using DReporting.Service;
 
 namespace WebAPI.Controllers
 {
@@ -12,44 +15,54 @@ namespace WebAPI.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        //Inject the Configuration class via constructor
-        private ReportModel _configModel { get; set; }
+        private DynamicResourceService dynamicResourceService;
+        private readonly string schemaName = "ReportModel";
+        private readonly string id = "urss5MSM5qcV6whV0EyvW0";
 
-        public ValuesController(ReportModel configuration)
+        private ReportModel configModel { get; set; }
+        
+        public ValuesController(DynamicResourceService _dynamicResourceService, ReportModel _configuration)
         {
-            _configModel = configuration;
+            dynamicResourceService = _dynamicResourceService;
+            configModel = _configuration;
         }
-
+        
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] {"Done:", _configModel.Done};
+            var getData = dynamicResourceService.GetData(schemaName, id, ClientBase.DefaultEmbed, ClientBase.DefaultFields);
+            return Ok(getData);
+            
+           //return new string[] {"Done:", configModel.Done};
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public ActionResult<string> Get(string id)
         {
-            return "value";
+            return Ok();
         }
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] ReportModel resource)
         {
+            Ok(dynamicResourceService.InsertData(schemaName, resource));
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put(string id, [FromBody] ReportModel resource)
         {
+            Ok(dynamicResourceService.UpdateData(schemaName, resource));
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Delete(string id)
         {
+            Ok(dynamicResourceService.DeleteData(id));
         }
     }
 }

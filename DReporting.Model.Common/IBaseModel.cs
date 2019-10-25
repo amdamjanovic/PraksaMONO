@@ -21,7 +21,6 @@ namespace DReporting.Model.Common
         Task<IModel> UpdateAsync(IModel resource);
         Task<IModel> UpdateAsync(string schemaName, IModel resource);
 
-        Task<IModel> GetByIdAsync(string id);
-        int Count(Func<IModel, bool> predicate);
+        Task<IModel> GetById(string id);
     }
 }

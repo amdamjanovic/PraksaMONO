@@ -22,12 +22,7 @@ namespace DReporting.Model
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
         public SGuid Id { get; set; }
-
-        public int Count(Func<IModel, bool> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public Task<bool> DeleteAsync(SGuid id) => baseModel.DeleteAsync(id);
 
         public Task<CollectionModelBase<IModel>> FindAsync(string searchQuery = "", int page = 1, int rpp = 10, string sort = "", string embed = "", string fields = "") => baseModel.FindAsync(ClientBase.DefaultSearchQuery, ClientBase.DefaultPage, ClientBase.DefaultMaxNumberOfResults, ClientBase.DefaultSorting, ClientBase.DefaultEmbed, ClientBase.DefaultFields);
@@ -38,10 +33,7 @@ namespace DReporting.Model
 
         public Task<IModel> GetAsync(string schemaName, SGuid id, string embed = "", string fields = "") => baseModel.GetAsync(schemaName, id, ClientBase.DefaultEmbed, ClientBase.DefaultFields);
 
-        public Task<IModel> GetByIdAsync(string id)
-        {
-            throw new NotImplementedException();
-        }
+        public Task<IModel> GetById(string id) => baseModel.GetById(id);
 
         public Task<IModel> InsertAsync(IModel resource) => baseModel.InsertAsync(resource);
 

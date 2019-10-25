@@ -1,4 +1,5 @@
-﻿using Baasic.Client.Common.Infrastructure.DependencyInjection;
+﻿using Baasic.Client.Common.Configuration;
+using Baasic.Client.Common.Infrastructure.DependencyInjection;
 using Baasic.Client.Common.Infrastructure.Security;
 using Baasic.Client.Configuration;
 using System;
@@ -16,7 +17,6 @@ public class AppClientConfiguration : ClientConfiguration
     #endregion Fields
 
     #region Constructors
-    
     /// <summary>
     /// Initializes a new instance of the <see cref="AppClientConfiguration" /> class.
     /// </summary>
@@ -31,10 +31,8 @@ public class AppClientConfiguration : ClientConfiguration
         : base(applicationIdentifier, tokenHandler)
     {
     }
-
     #endregion Constructors
 }
-
 
 /// <summary>
 /// Dependency Injection Module containing Baasic Client bindings.
@@ -51,7 +49,7 @@ public partial class DIModule : IDIModule
     {
         #region Configuration
 
-        dependencyResolver.Register<ClientConfiguration, AppClientConfiguration>();
+        dependencyResolver.Register<IClientConfiguration, AppClientConfiguration>();
 
         #endregion Configuration
     }

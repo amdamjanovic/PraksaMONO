@@ -1,9 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Baasic.Client.Common;
+using Baasic.Client.Common.Configuration;
+using Baasic.Client.Common.Infrastructure.DependencyInjection;
+using Baasic.Client.Configuration;
 using Baasic.Client.Core;
+using Baasic.Client.Infrastructure.DependencyInjection;
 using Baasic.Client.Model;
 using DReporting.Model;
 using DReporting.Model.Common;
+using DReporting.Repository;
 using DReporting.Repository.Common;
 
 namespace Baasic.Client.Modules.DynamicResource
@@ -11,63 +18,55 @@ namespace Baasic.Client.Modules.DynamicResource
     public class DynamicResourceRepository : IDynamicResourceRepository  {
 
         public string id = "urss5MSM5qcV6whV0EyvW0";
-        public string url = "https://api.baasic.com/v1/dreporting/resources/ReportModel/";
-        public string schemaName = "DReporting";
-
+        public string schemaName = "ReportModel";
+        
         private readonly ReportModel reportModel;
-        private readonly IBaseModel dynamicResourceClient;
-        private readonly MyDbContext myDbContext;
+        private readonly IDynamicResourceClient<ReportModel> dynamicResourceClient;
+        private readonly DIModuleRepository dIModuleRepository;
 
         #region Constructors
-        public DynamicResourceRepository(IBaseModel _dynamicResourceClient, MyDbContext _myDbContext)
+        public DynamicResourceRepository(IDynamicResourceClient<ReportModel> _dynamicResourceClient)
         {
             dynamicResourceClient = _dynamicResourceClient;
-            myDbContext = _myDbContext;
         }
-
-        public DynamicResourceRepository()
+        
+        public DynamicResourceRepository(ReportModel _reportModel)
         {
-        }
-
-        public DynamicResourceRepository(ReportModel reportModel)
-        {
-            this.reportModel = reportModel;
+            reportModel = _reportModel;
         }
         #endregion
 
         #region Methods
         //GET DATA
-        public async Task GetDataAsync(string schemaName, 
-                                       string id, 
-                                       string embed, 
-                                       string fields)
+        public Task GetData(string schemaName, string id, string embed, string fields)
         {
-            await dynamicResourceClient.GetAsync(schemaName, id, ClientBase.DefaultEmbed, ClientBase.DefaultFields);
+            return dynamicResourceClient.GetAsync(schemaName, id, embed, fields);
+        }
+
+        //FIND DATA
+        public Task FindData(string schemaName, string searchQuery, int page, int rpp, string sort, string embed, string fields)
+        {
+            return dynamicResourceClient.FindAsync(schemaName, searchQuery, page, rpp, sort, embed, fields);
         }
 
         //DELETE DATA    
-        public async Task DeleteDataAsync(string id)
+        public Task DeleteData(string id)
         {
-            await dynamicResourceClient.DeleteAsync(id);
+            return dynamicResourceClient.DeleteAsync(id);
         }
 
         //UPDATE DATA
-        public async Task UpdateDataAsync(string schemaName, ReportModel resource)
+        public Task UpdateData(string schemaName, ReportModel resource)
         {
-            await dynamicResourceClient.UpdateAsync(schemaName, resource);
+            return dynamicResourceClient.UpdateAsync(schemaName, resource);
         }
 
         //INSERT DATA
-        public async Task InsertDataAsync(string schemaName, ReportModel resource)
+        public Task InsertData(string schemaName, ReportModel resource)
         {
-            await dynamicResourceClient.InsertAsync(schemaName, resource);
+            return dynamicResourceClient.InsertAsync(schemaName, resource);
         }
-
-        //GET DATA BY ID
-        public async Task GetDataById(string id)
-        {
-            await dynamicResourceClient.GetByIdAsync(id);
-        }
+        
         #endregion
     }
 }

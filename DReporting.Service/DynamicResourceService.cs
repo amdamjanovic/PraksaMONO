@@ -1,39 +1,38 @@
-﻿using Baasic.Client.Core;
-using Baasic.Client.Model;
+﻿using Baasic.Client.Common.Infrastructure.DependencyInjection;
+using Baasic.Client.Core;
+using Baasic.Client.Infrastructure.DependencyInjection;
 using Baasic.Client.Modules.DynamicResource;
 using DReporting.Model;
-using DReporting.Model.Common;
 using DReporting.Repository;
 using DReporting.Repository.Common;
 using DReporting.Service.Common;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System;
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using static Baasic.Client.Modules.DynamicResource.DynamicResourceRepository;
-using ModelStateDictionary = Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary;
 
 namespace DReporting.Service
 {
     public class DynamicResourceService : IDynamicResourceService
     {
-        private IModelRepository modelRepostory;
-        private DynamicResourceRepository dynamicResourceRepository;
+        private readonly string id = "urss5MSM5qcV6whV0EyvW0";
+        private readonly string resource = "ReportModel";
+        
+        private IDynamicResourceRepository dynamicResourceRepository;
         private IValidationDictionary validationDictionary;
+        private readonly ReportModel reportModel;
+        private readonly DIModuleService dIModuleService;
+        private readonly IDependencyResolver dependencyResolver;
 
         #region Constructors
-        public DynamicResourceService(IValidationDictionary _validationDictionary, IModelRepository _modelRepostory, DynamicResourceRepository _dynamicResourceRepository)
+        public DynamicResourceService(IDynamicResourceRepository _dynamicResourceRepository)
         {
-            modelRepostory = _modelRepostory;
-            validationDictionary = _validationDictionary;
             dynamicResourceRepository = _dynamicResourceRepository;
         }
-
-        public DynamicResourceService(IValidationDictionary _validationDictionary, DynamicResourceRepository _dynamicResourceRepository)
+        
+        public DynamicResourceService(IValidationDictionary _validationDictionary, ReportModel _reportModel)
         {
             validationDictionary = _validationDictionary;
-            dynamicResourceRepository = _dynamicResourceRepository;
+            reportModel = _reportModel;
         }
         #endregion
 
@@ -67,55 +66,32 @@ namespace DReporting.Service
             return validationDictionary.IsValid;
         }
         #endregion
-
-        #region Get/Post methods
-        public IEnumerable<ReportModel> ListModel()
-        {
-            return modelRepostory.ListModel();
-        }
-
-        public bool CreateModel(ReportModel modelToCreate)
-        {
-            if (!ValidateInput(modelToCreate))
-            {
-                return false;
-            }
-            try
-            {
-                modelRepostory.CreateModel(modelToCreate);
-            }
-            catch
-            {
-                return false;
-            }
-            return true;
-        }
-        #endregion
-
+        
         #region Methods
-        public async Task DeleteDataAsync(string id)
+        
+        public Task GetData(string schemaName, string id, string embed, string fields)
         {
-            await dynamicResourceRepository.DeleteDataAsync(id);
+            return dynamicResourceRepository.GetData(schemaName, id, embed, fields);
         }
 
-        public async Task GetDataAsync(string schemaName, string id, string embed, string fields)
+        public Task FindData(string schemaName, string searchQuery, int page, int rpp, string sort, string embed, string fields)
         {
-            await dynamicResourceRepository.GetDataAsync(schemaName, id, ClientBase.DefaultEmbed, ClientBase.DefaultFields);
+            return dynamicResourceRepository.FindData(schemaName, searchQuery, page, rpp, sort, embed, fields);
         }
 
-        public async Task InsertDataAsync(string schemaName, ReportModel resource)
+        public Task DeleteData(string id)
         {
-            await dynamicResourceRepository.InsertDataAsync(schemaName, resource);
+            return dynamicResourceRepository.DeleteData(id);
         }
 
-        public async Task UpdateDataAsync(string schemaName, ReportModel resource)
+        public Task InsertData(string schemaName, ReportModel resource)
         {
-            await dynamicResourceRepository.UpdateDataAsync(schemaName, resource);
+            return dynamicResourceRepository.InsertData(schemaName, resource);
         }
 
-        public async Task GetDataById(string id)
+        public Task UpdateData(string schemaName, ReportModel resource)
         {
-            await dynamicResourceRepository.GetDataById(id);
+            return dynamicResourceRepository.UpdateData(schemaName, resource);
         }
     }
     #endregion

@@ -6,7 +6,6 @@ namespace WebAPI
     {
         void IModule.Configure(IComponentRegistry componentRegistry)
         {
-
         }
     }
 }
