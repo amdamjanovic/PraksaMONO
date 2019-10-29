@@ -1,22 +1,15 @@
-﻿using Baasic.Client.Common.Infrastructure.DependencyInjection;
-using Baasic.Client.Infrastructure.DependencyInjection;
+﻿using Autofac;
+using DReporting.Model;
 using DReporting.Service.Common;
+using Microsoft.Extensions.Logging;
 
 namespace DReporting.Service
 {
-    public class DIModuleService : IDIModule
+    public class DIModuleService : Autofac.Module
     {
-        private IDependencyResolver dependencyResolver;
-        
-        public DIModuleService(IDependencyResolver _dependencyResolver)
+        protected override void Load(ContainerBuilder builder)
         {
-            dependencyResolver = _dependencyResolver;
-        }
-
-        public void Load(IDependencyResolver dependencyResolver)
-        {
-            this.dependencyResolver.Register<IDynamicResourceService, DynamicResourceService>();
-            
+            builder.RegisterType<DynamicResourceService>().As<IDynamicResourceService<ReportModel>>();
         }
     }
 }

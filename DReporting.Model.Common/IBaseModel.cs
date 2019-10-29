@@ -1,5 +1,6 @@
 ﻿using Baasic.Client.Common;
 using Baasic.Client.Model;
+using Baasic.Client.Modules.DynamicResource;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,7 +21,6 @@ namespace DReporting.Model.Common
         Task<bool> PatchAsync<TIn>(string schemaName, SGuid id, TIn resource);
         Task<IModel> UpdateAsync(IModel resource);
         Task<IModel> UpdateAsync(string schemaName, IModel resource);
-
-        Task<IModel> GetById(string id);
+        
     }
 }

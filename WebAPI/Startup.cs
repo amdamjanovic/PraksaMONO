@@ -19,6 +19,7 @@ using System.IO;
 using System.Linq;
 using Baasic.Client.AutoFac;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace WebAPI
 {
@@ -35,13 +36,14 @@ namespace WebAPI
         public Startup(IConfiguration _config, IHostingEnvironment env)
         {
             Configuration = _config;
+
             ReportModel reportModel = new ReportModel();
 
             var builder = new ConfigurationBuilder()
               .SetBasePath(env.ContentRootPath)
               .AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true)
               .AddEnvironmentVariables();
-
+            
             Configuration = builder.Build();
             ConfigurationBinder.Bind(Configuration, reportModel);
         }
@@ -49,10 +51,10 @@ namespace WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddOptions();
-            
-            services.AddTransient<IDynamicResourceService, DynamicResourceService>();
 
+            services.AddTransient<IDynamicResourceService<ReportModel>, DynamicResourceService>();
+            services.AddTransient<IDynamicResourceRepository<ReportModel>, DynamicResourceRepository>();
+            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddControllersAsServices();
             
             AutofacContainer = ConfigureDIAutofac();
@@ -82,11 +84,10 @@ namespace WebAPI
             var containerBuilder = new ContainerBuilder();
             var path = AppDomain.CurrentDomain.BaseDirectory;
             var assemblies = Directory.GetFiles(path, "DReporting.*.dll").Select(Assembly.LoadFrom).ToArray();
-
-            containerBuilder.RegisterModule(new AutofacModule());
             
+            containerBuilder.RegisterModule(new AutofacModule());
             containerBuilder.RegisterAssemblyModules(assemblies);
-
+            
             var autofacSettings = new AutoFacSettings(containerBuilder);
             var resolver = new AutofacDependencyResolver(autofacSettings);
             resolver.Initialize();

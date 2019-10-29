@@ -17,11 +17,7 @@ namespace DReporting.Model
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
         public SGuid Id { get; set; }
-
-        public static explicit operator ReportModel(Task v)
-        {
-            throw new NotImplementedException();
-        }
+        
 
     }
 }

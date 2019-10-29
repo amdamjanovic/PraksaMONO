@@ -32,9 +32,7 @@ namespace DReporting.Model
         public Task<IModel> GetAsync(SGuid id, string embed = "", string fields = "") => baseModel.GetAsync(id, ClientBase.DefaultEmbed, ClientBase.DefaultFields);
 
         public Task<IModel> GetAsync(string schemaName, SGuid id, string embed = "", string fields = "") => baseModel.GetAsync(schemaName, id, ClientBase.DefaultEmbed, ClientBase.DefaultFields);
-
-        public Task<IModel> GetById(string id) => baseModel.GetById(id);
-
+        
         public Task<IModel> InsertAsync(IModel resource) => baseModel.InsertAsync(resource);
 
         public Task<IModel> InsertAsync(string schemaName, IModel resource) => baseModel.InsertAsync(schemaName, resource);

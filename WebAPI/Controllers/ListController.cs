@@ -4,6 +4,7 @@ using DReporting.Repository;
 using DReporting.Service;
 using DReporting.Service.Common;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -16,23 +17,18 @@ namespace DReporting.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ListController : ControllerBase
+    public class ListController : Controller
     {
         private readonly string id = "urss5MSM5qcV6whV0EyvW0";
         private readonly string schemaName = "ReportModel";
 
-        private IDynamicResourceService dynamicResourceService;
-        private ReportModel reportModel;
-
-        private readonly DIModuleService dIModuleService;
-        private readonly DIModuleRepository dIModuleRepository;
+        protected IDynamicResourceService<ReportModel> DynamicResourceService { get; private set; }
 
         #region Constructors
 
-        public ListController(IDynamicResourceService _dynamicResourceService, ReportModel _reportModel)
+        public ListController(IDynamicResourceService<ReportModel> dynamicResourceService)
         {
-            dynamicResourceService = _dynamicResourceService;
-            reportModel = _reportModel;
+            DynamicResourceService = dynamicResourceService;
         }
 
         #endregion
@@ -40,17 +36,14 @@ namespace DReporting.WebAPI.Controllers
         #region Get/Post Index
         //GET
         [HttpGet]
+        [ActionName("List")]
         public async Task<ActionResult> Index()
         {
-            await dynamicResourceService.GetData(schemaName,
-                                                                 id,
-                                                                 ClientBase.DefaultEmbed,
-                                                                 ClientBase.DefaultFields);
-            return Ok();
-                       
+            var getData = await DynamicResourceService.GetData(schemaName, id, ClientBase.DefaultEmbed, ClientBase.DefaultFields);
+            return Ok(getData);
+               
+            //var user = from i in getData where i.Id == id select i;
             /*
-            var user = from i in queryValue where i.Id == id select i;
-            
             if (user == null)
             {
                 var responseBad = new HttpResponseMessage(HttpStatusCode.BadRequest);
@@ -63,6 +56,8 @@ namespace DReporting.WebAPI.Controllers
                 return Ok(responseOk);
             }*/
         }
+
+
         [Route("list/all")]
         public ActionResult Post()
         {
@@ -101,7 +96,7 @@ namespace DReporting.WebAPI.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    await dynamicResourceService.InsertData(schemaName, resource);
+                    await DynamicResourceService.InsertData(schemaName, resource);
                     return RedirectToAction("Index");
                 }
             }
@@ -128,7 +123,7 @@ namespace DReporting.WebAPI.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    await dynamicResourceService.UpdateData(schemaName, resource);
+                    await DynamicResourceService.UpdateData(schemaName, resource);
                     return RedirectToAction("Index");
                 }
             }
@@ -154,7 +149,7 @@ namespace DReporting.WebAPI.Controllers
         {
             try
             {
-                await dynamicResourceService.DeleteData(id);
+                await DynamicResourceService.DeleteData(id);
             }
             catch
             {

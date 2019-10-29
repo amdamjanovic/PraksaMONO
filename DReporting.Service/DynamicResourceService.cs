@@ -12,27 +12,19 @@ using System.Threading.Tasks;
 
 namespace DReporting.Service
 {
-    public class DynamicResourceService : IDynamicResourceService
+    public class DynamicResourceService : IDynamicResourceService<ReportModel>
     {
         private readonly string id = "urss5MSM5qcV6whV0EyvW0";
         private readonly string resource = "ReportModel";
-        
-        private IDynamicResourceRepository dynamicResourceRepository;
-        private IValidationDictionary validationDictionary;
-        private readonly ReportModel reportModel;
-        private readonly DIModuleService dIModuleService;
-        private readonly IDependencyResolver dependencyResolver;
 
-        #region Constructors
-        public DynamicResourceService(IDynamicResourceRepository _dynamicResourceRepository)
-        {
-            dynamicResourceRepository = _dynamicResourceRepository;
-        }
+        protected IDynamicResourceRepository<ReportModel> DynamicResourceRepository { get; private set; }
+        protected IValidationDictionary ValidationDictionary { get; private set; }
         
-        public DynamicResourceService(IValidationDictionary _validationDictionary, ReportModel _reportModel)
+        #region Constructors
+        public DynamicResourceService(IDynamicResourceRepository<ReportModel> dynamicResourceRepository, IValidationDictionary validationDictionary)
         {
-            validationDictionary = _validationDictionary;
-            reportModel = _reportModel;
+            DynamicResourceRepository = dynamicResourceRepository;
+            ValidationDictionary = validationDictionary;
         }
         #endregion
 
@@ -41,57 +33,57 @@ namespace DReporting.Service
         {
             if (inputToValidate.Date == null)
             {
-                validationDictionary.AddError("Date", "Date is required");
+                ValidationDictionary.AddError("Date", "Date is required");
             }
             if (inputToValidate.Done.Trim().Length == 0)
             {
-                validationDictionary.AddError("Done", "Input is required");
+                ValidationDictionary.AddError("Done", "Input is required");
             }
             if (inputToValidate.InProgress.Trim().Length == 0)
             {
-                validationDictionary.AddError("InProgress", "Input is required");
+                ValidationDictionary.AddError("InProgress", "Input is required");
             }
             if (inputToValidate.Scheduled.Trim().Length == 0)
             {
-                validationDictionary.AddError("Scheduled", "Input is required");
+                ValidationDictionary.AddError("Scheduled", "Input is required");
             }
             if (inputToValidate.Problems.Trim().Length == 0)
             {
-                validationDictionary.AddError("Problems", "Input is required");
+                ValidationDictionary.AddError("Problems", "Input is required");
             }
             if (inputToValidate.Description.Trim().Length == 0)
             {
-                validationDictionary.AddError("Description", "Input is required");
+                ValidationDictionary.AddError("Description", "Input is required");
             }
-            return validationDictionary.IsValid;
+            return ValidationDictionary.IsValid;
         }
         #endregion
         
         #region Methods
         
-        public Task GetData(string schemaName, string id, string embed, string fields)
+        public Task<ReportModel> GetData(string schemaName, string id, string embed, string fields)
         {
-            return dynamicResourceRepository.GetData(schemaName, id, embed, fields);
+            return DynamicResourceRepository.GetData(schemaName, id, embed, fields);
         }
 
         public Task FindData(string schemaName, string searchQuery, int page, int rpp, string sort, string embed, string fields)
         {
-            return dynamicResourceRepository.FindData(schemaName, searchQuery, page, rpp, sort, embed, fields);
+            return DynamicResourceRepository.FindData(schemaName, searchQuery, page, rpp, sort, embed, fields);
         }
 
         public Task DeleteData(string id)
         {
-            return dynamicResourceRepository.DeleteData(id);
+            return DynamicResourceRepository.DeleteData(id);
         }
 
-        public Task InsertData(string schemaName, ReportModel resource)
+        public Task<ReportModel> InsertData(string schemaName, ReportModel resource)
         {
-            return dynamicResourceRepository.InsertData(schemaName, resource);
+            return DynamicResourceRepository.InsertData(schemaName, resource);
         }
 
-        public Task UpdateData(string schemaName, ReportModel resource)
+        public Task<ReportModel> UpdateData(string schemaName, ReportModel resource)
         {
-            return dynamicResourceRepository.UpdateData(schemaName, resource);
+            return DynamicResourceRepository.UpdateData(schemaName, resource);
         }
     }
     #endregion
