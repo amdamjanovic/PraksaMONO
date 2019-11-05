@@ -9,10 +9,9 @@ using System;
 /// </summary>
 public class AppClientConfiguration : ClientConfiguration
 {
-
     #region Fields
 
-    static public string apiKey { get; set; }
+    static public string apiKey = "dreporting";
 
     #endregion Fields
 

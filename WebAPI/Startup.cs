@@ -1,41 +1,38 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using AutoMapper;
+using Baasic.Client.AutoFac;
+using Baasic.Client.Common;
+using Baasic.Client.Common.Configuration;
+using Baasic.Client.Common.Infrastructure.DependencyInjection;
+using Baasic.Client.Configuration;
+using Baasic.Client.Modules.DynamicResource;
+using DReporting.Model;
+using DReporting.Repository;
+using DReporting.Repository.Common;
+using DReporting.Service;
+using DReporting.Service.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Autofac.Extensions.DependencyInjection;
-using Autofac;
-using DReporting.Model;
-using DReporting.Service.Common;
-using DReporting.Service;
-using DReporting.Repository.Common;
-using Baasic.Client.Modules.DynamicResource;
-using DReporting.WebAPI;
-using System.Reflection;
-using Baasic.Client.Common.Infrastructure.DependencyInjection;
-using DReporting.Repository;
-using System.IO;
-using System.Linq;
-using Baasic.Client.AutoFac;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace WebAPI
+namespace WebApi
 {
-    #region Startup Development
-    // Fallback Startup class
-    // Selected if the environment doesn't match a Startup{EnvironmentName} class
     public class Startup
     {
         public IConfiguration Configuration { get; set; }
-        public ILifetimeScope AutofacContainer { get; set; }
-        public ReportModel ReportModel { get; }
-        
+        public ILifetimeScope AutofacContainer { get; private set; }
+        public ReportModel ReportModel { get; private set; }
 
-        public Startup(IConfiguration _config, IHostingEnvironment env)
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
-            Configuration = _config;
+            Configuration = configuration;
 
             ReportModel reportModel = new ReportModel();
 
@@ -47,46 +44,38 @@ namespace WebAPI
             Configuration = builder.Build();
             ConfigurationBinder.Bind(Configuration, reportModel);
         }
-        
+
         // This method gets called by the runtime. Use this method to add services to the container.
+        // IServiceProvider is the component that resolves and creates the dependencies out of a IServiceCollection
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-
-            services.AddTransient<IDynamicResourceService<ReportModel>, DynamicResourceService>();
-            services.AddTransient<IDynamicResourceRepository<ReportModel>, DynamicResourceRepository>();
-            
+            services.AddOptions();
+            services.AddAutoMapper(typeof(Startup));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddControllersAsServices();
             
-            AutofacContainer = ConfigureDIAutofac();
+            services.AddScoped<IDynamicResourceService<ReportModel>, DynamicResourceService>();
+            services.AddScoped<IDynamicResourceRepository<ReportModel>, DynamicResourceRepository>();
+           // services.AddScoped<IDynamicResourceClient<ReportModel>, DynamicResourceClient<ReportModel>>();
+           // services.AddScoped<IClientConfiguration, ClientConfiguration>();
             
+            AutofacContainer = ConfigureDIAutofac(services);
+
             return new AutofacServiceProvider(AutofacContainer);
         }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        // The Configure method is used to specify how the app responds to HTTP requests
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-                app.UseHsts();
-            }
-                app.UseHttpsRedirection();
-                app.UseMvc();
-        }
-
-        public IContainer ConfigureDIAutofac()
+        
+        public IContainer ConfigureDIAutofac(IServiceCollection services)
         {
             var containerBuilder = new ContainerBuilder();
             var path = AppDomain.CurrentDomain.BaseDirectory;
             var assemblies = Directory.GetFiles(path, "DReporting.*.dll").Select(Assembly.LoadFrom).ToArray();
-            
+
+            containerBuilder.Populate(services);
             containerBuilder.RegisterModule(new AutofacModule());
             containerBuilder.RegisterAssemblyModules(assemblies);
+            
+            containerBuilder.RegisterType<DynamicResourceRepository>().UsingConstructor(typeof(IDynamicResourceClient<ReportModel>));
+            containerBuilder.RegisterType<DynamicResourceClient<ReportModel>>().As<DynamicResourceClient<ReportModel>>();
+            containerBuilder.RegisterType<ClientConfiguration>().As<ClientConfiguration>();
             
             var autofacSettings = new AutoFacSettings(containerBuilder);
             var resolver = new AutofacDependencyResolver(autofacSettings);
@@ -108,106 +97,22 @@ namespace WebAPI
 
             return autofacSettings.Container;
         }
-    }
-    #endregion
 
-    #region Startup Production 
-    //STARTUP PRODUCTION
-    public class StartupProduction
-    {
-        public StartupProduction(IConfiguration configuration, IHostingEnvironment env)
-        {
-            var builder = new ConfigurationBuilder()
-              .SetBasePath(env.ContentRootPath)
-              .AddJsonFile("appsettings.Production.json", optional: true, reloadOnChange: true)
-              .AddEnvironmentVariables();
-            this.Configuration = builder.Build();
-        }
-
-        public IConfigurationRoot Configuration { get; set; }
-        public ILifetimeScope AutofacContainer { get; set; }
-
-        public IServiceProvider ConfigureServices(IServiceCollection services)
-        {
-            //Singleton objects are the same for every object and every request
-            services.AddSingleton(Configuration.GetSection("ConnectionProd").Get<ReportModel>());
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
-            // create a container-builder and register dependencies
-            var containerBuilder = new ContainerBuilder();
-            containerBuilder.RegisterModule(new AutofacModule());
-
-            // populate the Autofac container with services (service-descriptors added to `IServiceCollection`)
-            containerBuilder.Populate(services);
-
-            AutofacContainer = containerBuilder.Build();
-
-            // this will be used as the service-provider for the application!
-            return new AutofacServiceProvider(AutofacContainer);
-        }
-
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsProduction() || env.IsStaging())
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
             {
                 app.UseExceptionHandler("/Error");
+                app.UseHsts();
             }
-
             app.UseHttpsRedirection();
             app.UseMvc();
         }
     }
-    #endregion
-
-    #region Startup Staging
-    //STARTUP STAGING
-    public class StartupStaging
-    {
-        public StartupStaging(IConfiguration configuration, IHostingEnvironment env)
-        {
-            var builder = new ConfigurationBuilder()
-              .SetBasePath(env.ContentRootPath)
-              .AddJsonFile("appsettings.Staging.json", optional: true, reloadOnChange: true)
-              .AddEnvironmentVariables();
-            this.Configuration = builder.Build();
-        }
-
-        public IConfigurationRoot Configuration { get; set; }
-        public ILifetimeScope AutofacContainer { get; set; }
-
-        public IServiceProvider ConfigureServices(IServiceCollection services)
-        {
-            //Singleton objects are the same for every object and every request
-            services.AddSingleton(Configuration.GetSection("ConnectionStag").Get<ReportModel>());
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
-            // create a container-builder and register dependencies
-            var containerBuilder = new ContainerBuilder();
-            containerBuilder.RegisterModule(new AutofacModule());
-
-            // populate the Autofac container with services (service-descriptors added to `IServiceCollection`)
-            containerBuilder.Populate(services);
-
-            AutofacContainer = containerBuilder.Build();
-
-            // this will be used as the service-provider for the application!
-            return new AutofacServiceProvider(AutofacContainer);
-        }
-
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {
-            if (env.IsStaging() || env.IsProduction())
-            {
-                app.UseExceptionHandler("/Error");
-            }
-
-            app.UseHttpsRedirection();
-            app.UseMvc();
-        }
-    }
-    #endregion
-
 }
 

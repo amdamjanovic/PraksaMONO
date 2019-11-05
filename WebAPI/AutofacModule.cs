@@ -1,10 +1,10 @@
 ﻿using Autofac.Core;
 
-namespace WebAPI
+namespace WebApi
 {
-    internal class AutofacModule : IModule
+    public class AutofacModule : IModule
     {
-        void IModule.Configure(IComponentRegistry componentRegistry)
+        public void Configure(IComponentRegistry componentRegistry)
         {
         }
     }

@@ -1,13 +1,7 @@
-﻿using Baasic.Client.Common.Infrastructure.DependencyInjection;
-using Baasic.Client.Core;
-using Baasic.Client.Infrastructure.DependencyInjection;
-using Baasic.Client.Modules.DynamicResource;
+﻿using Baasic.Client.Common.Configuration;
 using DReporting.Model;
-using DReporting.Repository;
 using DReporting.Repository.Common;
 using DReporting.Service.Common;
-using Microsoft.Extensions.DependencyInjection;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DReporting.Service
@@ -18,16 +12,16 @@ namespace DReporting.Service
         private readonly string resource = "ReportModel";
 
         protected IDynamicResourceRepository<ReportModel> DynamicResourceRepository { get; private set; }
-        protected IValidationDictionary ValidationDictionary { get; private set; }
-        
+        //protected IValidationDictionary ValidationDictionary { get; private set; }
+
         #region Constructors
-        public DynamicResourceService(IDynamicResourceRepository<ReportModel> dynamicResourceRepository, IValidationDictionary validationDictionary)
+        public DynamicResourceService(IDynamicResourceRepository<ReportModel> dynamicResourceRepository)
         {
             DynamicResourceRepository = dynamicResourceRepository;
-            ValidationDictionary = validationDictionary;
+            //ValidationDictionary = validationDictionary;
         }
         #endregion
-
+        /*
         #region Validation
         protected bool ValidateInput(ReportModel inputToValidate)
         {
@@ -58,7 +52,7 @@ namespace DReporting.Service
             return ValidationDictionary.IsValid;
         }
         #endregion
-        
+        */
         #region Methods
         
         public Task<ReportModel> GetData(string schemaName, string id, string embed, string fields)

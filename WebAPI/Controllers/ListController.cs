@@ -1,6 +1,7 @@
-﻿using Baasic.Client.Core;
+﻿using AutoMapper;
+using Baasic.Client.Common.Configuration;
+using Baasic.Client.Core;
 using DReporting.Model;
-using DReporting.Repository;
 using DReporting.Service;
 using DReporting.Service.Common;
 using Microsoft.AspNetCore.Mvc;
@@ -9,11 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace DReporting.WebAPI.Controllers
+namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -22,13 +22,16 @@ namespace DReporting.WebAPI.Controllers
         private readonly string id = "urss5MSM5qcV6whV0EyvW0";
         private readonly string schemaName = "ReportModel";
 
+        protected IMapper Mapper { get; private set; }
         protected IDynamicResourceService<ReportModel> DynamicResourceService { get; private set; }
 
         #region Constructors
 
-        public ListController(IDynamicResourceService<ReportModel> dynamicResourceService)
+        public ListController(IDynamicResourceService<ReportModel> dynamicResourceService, 
+                              IMapper mapper)
         {
             DynamicResourceService = dynamicResourceService;
+            Mapper = mapper;
         }
 
         #endregion
@@ -40,8 +43,18 @@ namespace DReporting.WebAPI.Controllers
         public async Task<ActionResult> Index()
         {
             var getData = await DynamicResourceService.GetData(schemaName, id, ClientBase.DefaultEmbed, ClientBase.DefaultFields);
-            return Ok(getData);
-               
+            ReportModel getReportModel = Mapper.Map<ReportModel>(getData);
+
+            if(getReportModel != null)
+            {
+                return Ok(getReportModel);
+            }
+            else
+            {
+                return BadRequest();
+            }
+            
+
             //var user = from i in getData where i.Id == id select i;
             /*
             if (user == null)
@@ -142,7 +155,7 @@ namespace DReporting.WebAPI.Controllers
         #endregion
 
         #region Get/Post Delete
-        
+
         //POST DELETE
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(string id)

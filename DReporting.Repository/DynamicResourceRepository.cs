@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Baasic.Client.Common.Configuration;
 using Baasic.Client.Modules.DynamicResource;
 using DReporting.Model;
-using DReporting.Model.Common;
 using DReporting.Repository.Common;
 
 namespace DReporting.Repository
@@ -14,6 +12,7 @@ namespace DReporting.Repository
         private string schemaName = "ReportModel";
         
         protected IDynamicResourceClient<ReportModel> DynamicResourceClient { get; private set; }
+        protected IClientConfiguration ClientConfiguration { get; private set; }
 
         #region Constructors
         public DynamicResourceRepository(IDynamicResourceClient<ReportModel> dynamicResourceClient)
